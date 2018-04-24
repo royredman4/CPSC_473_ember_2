@@ -16,6 +16,7 @@ export default Controller.extend({
       this.set('responseMessage', `Thank you! We've just saved your email address: ${this.get('emailAddress')}`);
       this.set('emailAddress', '');
     }
+    
   }
 
 });

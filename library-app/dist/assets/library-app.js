@@ -33,6 +33,38 @@ define('library-app/components/welcome-page', ['exports', 'ember-welcome-page/co
     }
   });
 });
+define('library-app/controllers/contact', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Controller.extend({
+
+    ValidEmail: Ember.computed.match('emailAddress', /^.+@.+\..+$/),
+    Messagesize: Ember.computed.empty('message'),
+    NotLongMessage: Ember.computed.not('isMessageEnoughLong'),
+    Validemail: Ember.computed.and('ValidEmail', 'NotLongMessage'),
+
+    actions: {
+      sendMessage() {
+        const email = this.get('emailAddress');
+        const message = this.get('message');
+
+        alert('Sending your message... ');
+
+        const responseMessage = 'Your Email: ' + email + ', Your Message: ' + message;
+        this.set('responseMessage', responseMessage);
+
+        const newCont = this.store.createRecord('contact', { email: email, message: message });
+        newCont.save().then(response => {
+          this.set('emailAddress', '');
+          this.set('message', '');
+        });
+      }
+    }
+  });
+});
 define('library-app/controllers/index', ['exports'], function (exports) {
   'use strict';
 
@@ -54,6 +86,7 @@ define('library-app/controllers/index', ['exports'], function (exports) {
         this.set('responseMessage', `Thank you! We've just saved your email address: ${this.get('emailAddress')}`);
         this.set('emailAddress', '');
       }
+
     }
 
   });
@@ -290,7 +323,7 @@ define("library-app/templates/contact", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "Mkcck93R", "block": "{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"Contact Page\"],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "library-app/templates/contact.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "aY3JL5Ud", "block": "{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"Contact Page\"],[8],[0,\"\\n\"],[6,\"div\"],[9,\"class\",\"row\"],[7],[0,\"\\n    \"],[6,\"div\"],[9,\"class\",\"col-md-8 col-md-offset-2\"],[7],[0,\"\\n        \"],[6,\"p\"],[9,\"class\",\"well\"],[7],[0,\"please send a Message\"],[8],[0,\"\\n      \"],[6,\"div\"],[9,\"class\",\"form-group\"],[7],[0,\"\\n          \"],[6,\"label\"],[7],[0,\"Your email address*:\"],[8],[0,\"\\n          \"],[1,[25,\"input\",null,[[\"type\",\"class\",\"placeholder\",\"value\",\"autofocus\"],[\"email\",\"form-control\",\"Your email address\",[20,[\"emailAddress\"]],\"autofocus\"]]],false],[0,\"\\n      \"],[8],[0,\"\\n      \"],[6,\"div\"],[9,\"class\",\"form-group\"],[7],[0,\"\\n          \"],[6,\"label\"],[7],[0,\"Your message*:\"],[8],[0,\"\\n          \"],[1,[25,\"textarea\",null,[[\"class\",\"placeholder\",\"rows\",\"value\"],[\"form-control\",\"Your message here.\",\"3\",[20,[\"message\"]]]]],false],[0,\"\\n      \"],[8],[0,\"\\n      \"],[6,\"button\"],[9,\"class\",\"btn btn-primary\"],[10,\"disabled\",[26,[[25,\"unless\",[[20,[\"Validemail\"]],\"disabled\"],null]]]],[3,\"action\",[[19,0,[]],\"sendMessage\"]],[7],[0,\"Send\"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n\"],[4,\"if\",[[20,[\"responseMessage\"]]],null,{\"statements\":[[0,\"      \"],[6,\"div\"],[9,\"class\",\"col-md-8 col-md-offset-2\"],[7],[0,\"\\n          \"],[6,\"br\"],[7],[8],[0,\"\\n          \"],[6,\"div\"],[9,\"class\",\"alert alert-success\"],[7],[0,\"\\n              \"],[6,\"h4\"],[7],[0,\"Thank you! Your message is sent.\"],[8],[0,\"\\n              \"],[6,\"p\"],[7],[1,[18,\"responseMessage\"],false],[8],[0,\"\\n          \"],[8],[0,\"\\n      \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[8],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "library-app/templates/contact.hbs" } });
 });
 define("library-app/templates/index", ["exports"], function (exports) {
   "use strict";

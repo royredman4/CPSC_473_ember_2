@@ -10,6 +10,11 @@ define('library-app/tests/app.lint-test', [], function () {
     assert.ok(true, 'app.js should pass ESLint\n\n');
   });
 
+  QUnit.test('controllers/contact.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/contact.js should pass ESLint\n\n21:27 - \'response\' is defined but never used. (no-unused-vars)');
+  });
+
   QUnit.test('controllers/index.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'controllers/index.js should pass ESLint\n\n');
